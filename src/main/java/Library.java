@@ -1,12 +1,12 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Library {
 
     public int amountBooks;
     public int signupTime;
     public int amountBooksPerDay;
-    public HashMap<Integer, Integer> books;
+    public Map<Integer, Integer> books;
 
     public int getMaxScore() {
         return maxScore;
@@ -31,7 +31,7 @@ public class Library {
         this.amountBooks = amountBooks;
         this.signupTime = signupTime;
         this.amountBooksPerDay = amountBooksPerDay;
-        books = new HashMap<>();
+        books = new TreeMap<>();
     }
 
 

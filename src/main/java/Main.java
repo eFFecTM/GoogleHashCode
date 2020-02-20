@@ -1,9 +1,6 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -47,6 +44,7 @@ public class Main {
                         int index = Integer.parseInt(s);
                         library.books.put(index, scoreBooks.get(index));
                     }
+                    library.books = sortByValues(library.books);
                     libraries.add(library);
                 }
             }
@@ -64,7 +62,7 @@ public class Main {
     {
         for (Library library: libraries)
         {
-             HashMap<Integer, Integer> books = library.books;
+             Map<Integer, Integer> books = library.books;
              int maxScore = 0;
              int maxScoreId = 0;
             for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : books.entrySet())
@@ -80,5 +78,24 @@ public class Main {
              library.setMaxScore(maxScore);
              library.setMaxScoreId(maxScoreId);
         }
+    }
+
+    public static <K, V extends Comparable<V>> Map<K, V>
+    sortByValues(final Map<K, V> map) {
+        Comparator<K> valueComparator =
+                new Comparator<K>() {
+                    public int compare(K k1, K k2) {
+                        int compare =
+                                map.get(k2).compareTo(map.get(k1));
+                        if (compare == 0)
+                            return 1;
+                        else
+                            return compare;
+                    }
+                };
+        Map<K, V> sortedByValues =
+                new TreeMap<K, V>(valueComparator);
+        sortedByValues.putAll(map);
+        return sortedByValues;
     }
 }
