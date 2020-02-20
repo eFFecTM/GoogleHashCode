@@ -142,6 +142,40 @@ public class Main {
         {
             return 0;
         }
+        Collections.sort(libraries, new Comparator<Library>() {
+            @Override
+            public int compare(Library library, Library t1) {
+                if (library.amountBooks > t1.amountBooks)
+                    return 1;
+                else if (library.amountBooks < t1.amountBooks)
+                    return -1;
+                else
+                    return 0;
+            }
+        });
+
+        TreeSet<Integer> bookList = new TreeSet<>();
+        int amountOfLibraries = 0;
+        for (Library library : libraries) {
+            int amountOfBooks = 0;
+            for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
+                if (!bookList.contains(integerIntegerEntry.getKey())) {
+                    amountOfBooks++;
+                    bookList.add(integerIntegerEntry.getKey());
+                }
+                else
+                {
+                    library.books.remove(integerIntegerEntry.getKey());
+                }
+            }
+            if (amountOfBooks > 0) {
+                amountOfLibraries++;
+            }
+            else
+            {
+                System.out.println("No books!!!");
+            }
+        }
 
         Collections.sort(libraries, new Comparator<Library>() {
             @Override
