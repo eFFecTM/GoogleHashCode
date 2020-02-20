@@ -1,6 +1,8 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,10 +52,33 @@ public class Main {
             }
         }
 
+        Calculate();
         // process
     }
 
     private static void output(String fileName) throws Exception {
         Files.write(Paths.get(fileName), (Iterable<String>)tempData1.stream()::iterator);
+    }
+
+    private static void Calculate()
+    {
+        for (Library library: libraries)
+        {
+             HashMap<Integer, Integer> books = library.books;
+             int maxScore = 0;
+             int maxScoreId = 0;
+            for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : books.entrySet())
+            {
+                int score = integerIntegerEntry.getValue();
+                if (score > maxScore)
+                {
+                    maxScore = score;
+                    maxScoreId = integerIntegerEntry.getKey();
+                }
+            }
+
+             library.setMaxScore(maxScore);
+             library.setMaxScoreId(maxScoreId);
+        }
     }
 }
