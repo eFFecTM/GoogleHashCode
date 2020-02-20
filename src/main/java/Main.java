@@ -8,17 +8,21 @@ public class Main {
     public static int amountBooks;
     public static int amountLibraries;
     public static int amountDays;
-    public static ArrayList<Integer> scoreBooks = new ArrayList<>();
-    public static List<String> tempData1 = new ArrayList<>();
-    public static List<Library> libraries = new ArrayList<>();
+    public static ArrayList<Integer> scoreBooks;
+    public static List<String> tempData1;
+    public static List<Library> libraries;
 
     public static void main(String... args) throws Exception {
         loadAndProcess("src/main/resources/a_example.txt");
+        loadAndProcess("src/main/resources/b_read_on.txt");
         System.out.println("test");
         //output("output1.txt");
     }
 
     private static void loadAndProcess(String path) throws Exception {
+        scoreBooks = new ArrayList<>();
+        tempData1 = new ArrayList<>();
+        libraries = new ArrayList<>();
         tempData1 = Files.lines(Paths.get(path)).collect(Collectors.toList());
         Library library = null;
         for (int i = 0; i < tempData1.size(); i++) {
@@ -34,10 +38,16 @@ public class Main {
                 }
             } else {
                 if (i % 2 == 0) {
-                    String[] lFirstLine = tempData1.get(i).split(" ");
-                    library = new Library(Integer.parseInt(lFirstLine[0]),
-                            Integer.parseInt(lFirstLine[1]),
-                            Integer.parseInt(lFirstLine[2]));
+                    String[] lFirstLine = tempData1.get(i).trim().split(" ");
+                    if (!tempData1.get(i).equals("")) {
+                        try {
+                            library = new Library(Integer.parseInt(lFirstLine[0]),
+                                    Integer.parseInt(lFirstLine[1]),
+                                    Integer.parseInt(lFirstLine[2]));
+                        } catch (Exception ex) {
+                            System.out.println("Ex.");
+                        }
+                    }
                 } else {
                     String[] lSecondLine = tempData1.get(i).split(" ");
                     for (String s : lSecondLine) {
@@ -60,6 +70,7 @@ public class Main {
 
     private static void Calculate()
     {
+        int i = 0;
         for (Library library: libraries)
         {
              Map<Integer, Integer> books = library.books;
@@ -76,10 +87,13 @@ public class Main {
                 }
             }
 
+            System.out.println("library: "+i+ " best book "+maxScoreId+" with score "+maxScore);
+
              library.setMaxScore(maxScore);
              library.setMaxScoreId(maxScoreId);
 
             library.booksRatio = library.totalScore / library.totalTimeNeeded;
+            i++;
         }
     }
 
