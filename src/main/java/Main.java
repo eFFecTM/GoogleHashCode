@@ -12,6 +12,7 @@ public class Main {
     public static List<String> tempData1;
     public static List<String> tempData2;
     public static List<Library> libraries;
+    public static List<Library> sortedLibraries;
 
     public static void main(String... args) throws Exception {
         loadAndProcess("src/main/resources/a_example.txt");
@@ -34,6 +35,7 @@ public class Main {
         tempData1 = new ArrayList<>();
         tempData2 = new ArrayList<>();
         libraries = new ArrayList<>();
+        sortedLibraries = new ArrayList<>();
         tempData1 = Files.lines(Paths.get(path)).collect(Collectors.toList());
         Library library = null;
         int count = 0;
@@ -79,7 +81,7 @@ public class Main {
         for (Library library : libraries) {
             StringBuilder bookString = new StringBuilder();
             for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
-                bookString.append(integerIntegerEntry.getValue());
+                bookString.append(integerIntegerEntry.getKey());
                 bookString.append(" ");
             }
 
@@ -108,14 +110,29 @@ public class Main {
                 }
             }
 
-            System.out.println("library: "+i+ " best book "+maxScoreId+" with score "+maxScore);
+            //System.out.println("library: "+i+ " best book "+maxScoreId+" with score "+maxScore);
 
              library.setMaxScore(maxScore);
              library.setMaxScoreId(maxScoreId);
 
             library.booksRatio = library.totalScore / library.totalTimeNeeded;
+
             i++;
         }
+
+        Collections.sort(libraries, new Comparator<Library>() {
+            @Override
+            public int compare(Library library, Library t1) {
+                if (library.booksRatio < t1.booksRatio)
+                    return 1;
+                else if (library.booksRatio > t1.booksRatio)
+                    return -1;
+                else
+                    return 0;
+            }
+        });
+
+        System.out.println(libraries.get(0).id);
     }
 
     public static <K, V extends Comparable<V>> Map<K, V>
