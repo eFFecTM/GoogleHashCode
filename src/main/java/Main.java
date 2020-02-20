@@ -10,21 +10,24 @@ public class Main {
     public static int amountDays;
     public static ArrayList<Integer> scoreBooks;
     public static List<String> tempData1;
+    public static List<String> tempData2;
     public static List<Library> libraries;
 
     public static void main(String... args) throws Exception {
         loadAndProcess("src/main/resources/a_example.txt");
+        output("output1.txt");
         loadAndProcess("src/main/resources/b_read_on.txt");
-        System.out.println("test");
-        //output("output1.txt");
+        output("output2.txt");
     }
 
     private static void loadAndProcess(String path) throws Exception {
         scoreBooks = new ArrayList<>();
         tempData1 = new ArrayList<>();
+        tempData2 = new ArrayList<>();
         libraries = new ArrayList<>();
         tempData1 = Files.lines(Paths.get(path)).collect(Collectors.toList());
         Library library = null;
+        int count = 0;
         for (int i = 0; i < tempData1.size(); i++) {
             if (i == 0) {
                 String[] firstLine = tempData1.get(0).split(" ");
@@ -40,13 +43,11 @@ public class Main {
                 if (i % 2 == 0) {
                     String[] lFirstLine = tempData1.get(i).trim().split(" ");
                     if (!tempData1.get(i).equals("")) {
-                        try {
-                            library = new Library(Integer.parseInt(lFirstLine[0]),
-                                    Integer.parseInt(lFirstLine[1]),
-                                    Integer.parseInt(lFirstLine[2]));
-                        } catch (Exception ex) {
-                            System.out.println("Ex.");
-                        }
+                        library = new Library(count,
+                                Integer.parseInt(lFirstLine[0]),
+                                Integer.parseInt(lFirstLine[1]),
+                                Integer.parseInt(lFirstLine[2]));
+                        count++;
                     }
                 } else {
                     String[] lSecondLine = tempData1.get(i).split(" ");
@@ -65,7 +66,12 @@ public class Main {
     }
 
     private static void output(String fileName) throws Exception {
-        Files.write(Paths.get(fileName), (Iterable<String>)tempData1.stream()::iterator);
+        tempData2.add("" + libraries.size());
+        for (Library library : libraries) {
+            tempData2.add(library.id + " " + "1");
+            tempData2.add("" + library.maxScoreId);
+        }
+        Files.write(Paths.get(fileName), (Iterable<String>)tempData2.stream()::iterator);
     }
 
     private static void Calculate()

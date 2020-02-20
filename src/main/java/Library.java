@@ -3,6 +3,7 @@ import java.util.TreeMap;
 
 public class Library {
 
+    public int id;
     public int amountBooks;
     public int signupTime;
     public int amountBooksPerDay;
@@ -30,7 +31,8 @@ public class Library {
     public int maxScoreId;
     public int totalScore;
 
-    public Library(int amountBooks, int signupTime, int amountBooksPerDay) {
+    public Library(int id, int amountBooks, int signupTime, int amountBooksPerDay) {
+        this.id = id;
         this.amountBooks = amountBooks;
         this.signupTime = signupTime;
         this.amountBooksPerDay = amountBooksPerDay;
