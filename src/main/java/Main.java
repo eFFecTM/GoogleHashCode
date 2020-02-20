@@ -15,22 +15,31 @@ public class Main {
     public static List<Library> sortedLibraries;
 
     public static void main(String... args) throws Exception {
-        loadAndProcess("src/main/resources/a_example.txt");
-        output("output1.txt");
-        loadAndProcess("src/main/resources/b_read_on.txt");
-        output("output2.txt");
-        loadAndProcess("src/main/resources/c_incunabula.txt");
-        output("output3.txt");
-        loadAndProcess("src/main/resources/d_tough_choices.txt");
-        output("output4.txt");
-        loadAndProcess("src/main/resources/e_so_many_books.txt");
-        output("output5.txt");
-        loadAndProcess("src/main/resources/f_libraries_of_the_world.txt");
-        output("output6.txt");
+        for (int i = 10; i < 20; i++) {
+            //int i = 1;
+        if (loadAndProcess("src/main/resources/a_example.txt", i) == 1) {
+            output(i + "/output1.txt");
+        }
+        if (loadAndProcess("src/main/resources/b_read_on.txt", i)== 1) {
+            output(i + "/output2.txt");
+        }
+        if (loadAndProcess("src/main/resources/c_incunabula.txt", i)== 1){
+                output(i + "/output3.txt");
+            }
+        if (loadAndProcess("src/main/resources/d_tough_choices.txt", i)== 1){
+                output(i + "/output4.txt");
+            }
+        if (loadAndProcess("src/main/resources/e_so_many_books.txt", i)== 1){
+                output(i + "/output5.txt");
+            }
+        if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", i)== 1){
+                output(i + "/output6.txt");
+            }
+        }
         //output("output1.txt");
     }
 
-    private static void loadAndProcess(String path) throws Exception {
+    private static int loadAndProcess(String path, double weightFactor) throws Exception {
         scoreBooks = new ArrayList<>();
         tempData1 = new ArrayList<>();
         tempData2 = new ArrayList<>();
@@ -57,7 +66,8 @@ public class Main {
                         library = new Library(count,
                                 Integer.parseInt(lFirstLine[0]),
                                 Integer.parseInt(lFirstLine[1]),
-                                Integer.parseInt(lFirstLine[2]));
+                                Integer.parseInt(lFirstLine[2]),
+                                weightFactor);
                         count++;
                     }
                 } else {
@@ -72,7 +82,7 @@ public class Main {
             }
         }
 
-        Calculate();
+        return Calculate();
         // process
     }
 
@@ -81,30 +91,28 @@ public class Main {
         for (Library library : libraries) {
             StringBuilder bookString = new StringBuilder();
             for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
-                bookString.append(integerIntegerEntry.getKey());
+                bookString.append((int)integerIntegerEntry.getKey());
                 bookString.append(" ");
             }
 
-            tempData2.add(library.id + " " +library.amountBooks);
+            tempData2.add((int)library.id + " " +(int)library.amountBooks);
             tempData2.add(bookString.toString());
         }
         Files.write(Paths.get(fileName), (Iterable<String>)tempData2.stream()::iterator);
     }
 
-    private static void Calculate()
+    private static int Calculate()
     {
         int i = 0;
-        for (Library library: libraries)
-        {
-             Map<Integer, Integer> books = library.books;
-             int maxScore = 0;
-             int maxScoreId = 0;
-            for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : books.entrySet())
-            {
+        for (Iterator<Library> iterator = libraries.iterator(); iterator.hasNext(); ) {
+            Library library = iterator.next();
+            Map<Integer, Integer> books = library.books;
+            int maxScore = 0;
+            int maxScoreId = 0;
+            for (Map.Entry<Integer, Integer> integerIntegerEntry : books.entrySet()) {
                 int score = integerIntegerEntry.getValue();
                 library.totalScore += score;
-                if (score > maxScore)
-                {
+                if (score > maxScore) {
                     maxScore = score;
                     maxScoreId = integerIntegerEntry.getKey();
                 }
@@ -112,12 +120,17 @@ public class Main {
 
             //System.out.println("library: "+i+ " best book "+maxScoreId+" with score "+maxScore);
 
-             library.setMaxScore(maxScore);
-             library.setMaxScoreId(maxScoreId);
+            library.setMaxScore(maxScore);
+            library.setMaxScoreId(maxScoreId);
 
             library.booksRatio = library.totalScore / library.totalTimeNeeded;
 
             i++;
+        }
+
+        if (libraries.isEmpty())
+        {
+            return 0;
         }
 
         Collections.sort(libraries, new Comparator<Library>() {
@@ -133,6 +146,7 @@ public class Main {
         });
 
         System.out.println(libraries.get(0).id);
+        return 1;
     }
 
     public static <K, V extends Comparable<V>> Map<K, V>
