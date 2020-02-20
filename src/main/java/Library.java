@@ -38,9 +38,7 @@ public class Library {
         this.signupTime = signupTime;
         this.amountBooksPerDay = amountBooksPerDay;
         books = new TreeMap<>();
-        this.weightFactor = weightFactor/2;
-        this.totalTimeNeeded = weightFactor * signupTime + amountBooks/amountBooksPerDay;
+        this.weightFactor = weightFactor;
+        this.totalTimeNeeded = 350 * signupTime + amountBooks/amountBooksPerDay;
     }
-
-
 }

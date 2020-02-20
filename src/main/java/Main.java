@@ -15,8 +15,8 @@ public class Main {
     public static List<Library> sortedLibraries;
 
     public static void main(String... args) throws Exception {
-        for (int i = 10; i < 20; i++) {
-            //int i = 1;
+        //for (int i = 10; i < 20; i++) {
+            int i = 1;
         if (loadAndProcess("src/main/resources/a_example.txt", i) == 1) {
             output(i + "/output1.txt");
         }
@@ -35,7 +35,7 @@ public class Main {
         if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", i)== 1){
                 output(i + "/output6.txt");
             }
-        }
+        //}
         //output("output1.txt");
     }
 
@@ -87,17 +87,27 @@ public class Main {
     }
 
     private static void output(String fileName) throws Exception {
-        tempData2.add("" + libraries.size());
+        //tempData2.add("" + libraries.size());
+        TreeSet<Integer> bookList = new TreeSet<>();
+        int amountOfLibraries = 0;
         for (Library library : libraries) {
             StringBuilder bookString = new StringBuilder();
+            int amountOfBooks = 0;
             for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
-                bookString.append((int)integerIntegerEntry.getKey());
-                bookString.append(" ");
+                if (!bookList.contains(integerIntegerEntry.getKey())) {
+                    amountOfBooks++;
+                    bookList.add(integerIntegerEntry.getKey());
+                    bookString.append((int) integerIntegerEntry.getKey());
+                    bookString.append(" ");
+                }
             }
-
-            tempData2.add((int)library.id + " " +(int)library.amountBooks);
-            tempData2.add(bookString.toString());
+            if (amountOfBooks > 0) {
+                amountOfLibraries++;
+                tempData2.add((int) library.id + " " + (int) amountOfBooks);
+                tempData2.add(bookString.toString());
+            }
         }
+        tempData2.add(0, ""+amountOfLibraries);
         Files.write(Paths.get(fileName), (Iterable<String>)tempData2.stream()::iterator);
     }
 
