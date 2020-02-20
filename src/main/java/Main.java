@@ -18,6 +18,15 @@ public class Main {
         output("output1.txt");
         loadAndProcess("src/main/resources/b_read_on.txt");
         output("output2.txt");
+        loadAndProcess("src/main/resources/c_incunabula.txt");
+        output("output3.txt");
+        loadAndProcess("src/main/resources/d_tough_choices.txt");
+        output("output4.txt");
+        loadAndProcess("src/main/resources/e_so_many_books.txt");
+        output("output5.txt");
+        loadAndProcess("src/main/resources/f_libraries_of_the_world.txt");
+        output("output6.txt");
+        //output("output1.txt");
     }
 
     private static void loadAndProcess(String path) throws Exception {
@@ -68,8 +77,14 @@ public class Main {
     private static void output(String fileName) throws Exception {
         tempData2.add("" + libraries.size());
         for (Library library : libraries) {
-            tempData2.add(library.id + " " + "1");
-            tempData2.add("" + library.maxScoreId);
+            StringBuilder bookString = new StringBuilder();
+            for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
+                bookString.append(integerIntegerEntry.getValue());
+                bookString.append(" ");
+            }
+
+            tempData2.add(library.id + " " +library.amountBooks);
+            tempData2.add(bookString.toString());
         }
         Files.write(Paths.get(fileName), (Iterable<String>)tempData2.stream()::iterator);
     }
