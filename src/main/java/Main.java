@@ -68,6 +68,7 @@ public class Main {
             for (java.util.Map.Entry<Integer, Integer> integerIntegerEntry : books.entrySet())
             {
                 int score = integerIntegerEntry.getValue();
+                library.totalScore += score;
                 if (score > maxScore)
                 {
                     maxScore = score;
@@ -77,6 +78,8 @@ public class Main {
 
              library.setMaxScore(maxScore);
              library.setMaxScoreId(maxScoreId);
+
+            library.booksRatio = library.totalScore / library.totalTimeNeeded;
         }
     }
 
