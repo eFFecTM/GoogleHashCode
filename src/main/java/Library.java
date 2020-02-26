@@ -9,7 +9,7 @@ public class Library {
     public double amountBooks;
     public double signupTime;
     public double amountBooksPerDay;
-    public HashMap<Integer, Integer> books;
+    public Map<Integer, Integer> books;
     public double booksRatio;
     public double totalTimeNeeded;
     public double weightFactor;
@@ -41,8 +41,8 @@ public class Library {
         this.amountBooks = amountBooks;
         this.signupTime = signupTime;
         this.amountBooksPerDay = amountBooksPerDay;
-        books = new HashMap<>();
+        books = new TreeMap<>();
         this.weightFactor = weightFactor;
-        this.totalTimeNeeded = 350 * signupTime + amountBooks/amountBooksPerDay;
+        this.totalTimeNeeded = weightFactor * signupTime + amountBooks/amountBooksPerDay;
     }
 }

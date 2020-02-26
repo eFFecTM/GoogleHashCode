@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static java.lang.Math.min;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.max;
+
 public class Main {
 
     public static int amountBooks;
@@ -25,28 +29,128 @@ public class Main {
             int i = 1;
         if (loadAndProcess("src/main/resources/a_example.txt", i) == 1) {
             output(/*i + "/*/"output1.txt");
-            CalculatePoints("output1.txt");
+            //CalculatePoints("output1.txt");
         }
         if (loadAndProcess("src/main/resources/b_read_on.txt", i)== 1) {
             output(/*i + "/*/"output2.txt");
-            CalculatePoints("output2.txt");
+            //CalculatePoints("output2.txt");
         }
         if (loadAndProcess("src/main/resources/c_incunabula.txt", i)== 1){
                 output(/*i + "/*/"output3.txt");
-                CalculatePoints("output3.txt");
+                //CalculatePoints("output3.txt");
             }
-        if (loadAndProcess("src/main/resources/d_tough_choices.txt", i)== 1){
-                output(/*i + "/*/"output4.txt");
-                CalculatePoints("output4.txt");
+
+
+        /*double previousfactor = 0;
+        double previousPoints = 0.0;
+        if (loadAndProcess("src/main/resources/d_tough_choices.txt", previousfactor) == 1) {
+            output(i + "/output4.txt");
+            previousPoints = CalculatePoints("output4.txt");
+        }
+        System.out.println("iteration "+0+" with factor "+previousfactor+" gives points: "+previousPoints);
+
+
+        double factor = 200;
+        for (int j = 1; j <= 20; j++) {
+            double currentPoints = 0.0;
+            if (loadAndProcess("src/main/resources/d_tough_choices.txt", factor) == 1) {
+                output(i + "/output4.txt");
+                currentPoints = CalculatePoints("output4.txt");
             }
-        if (loadAndProcess("src/main/resources/e_so_many_books.txt", i)== 1){
-                output(/*i + "/*/"output5.txt");
-                CalculatePoints("output5.txt");
+
+            double newFactor;
+            if (currentPoints > previousPoints)
+            {
+                newFactor = factor + abs(factor - previousfactor);
             }
-        if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", i)== 1){
+            else
+            {
+                newFactor = factor - abs(factor - previousfactor)/2;
+            }
+
+            previousfactor = factor;
+            factor = newFactor;
+            previousPoints = currentPoints;
+
+            System.out.println("iteration "+j+" with factor "+previousfactor+" gives points: "+currentPoints);
+        }*/
+        //if (loadAndProcess("src/main/resources/e_so_many_books.txt", i)== 1){
+        //        output(/*i + "/*/"output5.txt");
+                //CalculatePoints("output5.txt");
+        //    }
+
+        /*
+        double previousfactor = 0;
+        double previousPoints = 0.0;
+        double previousPreviousPoints = 0.0;
+        if (loadAndProcess("src/main/resources/e_so_many_books.txt", previousfactor)== 1){
+            output(/*i + "/output5.txt");
+            previousPreviousPoints = CalculatePoints("output4.txt");
+        }
+        System.out.println("iteration "+0+" with factor "+previousfactor+" gives points: "+previousPoints);
+
+        previousfactor = 100;
+        if (loadAndProcess("src/main/resources/e_so_many_books.txt", previousfactor)== 1){
+            output(/*i + "/output5.txt");
+            previousPoints = CalculatePoints("output4.txt");
+        }
+        System.out.println("iteration "+0+" with factor "+previousfactor+" gives points: "+previousPoints);
+
+
+        double factor = 200;
+        for (int j = 1; j <= 20; j++) {
+            double currentPoints = 0.0;
+            if (loadAndProcess("src/main/resources/e_so_many_books.txt", factor)== 1){
+                output(/*i + "/output5.txt");
+                currentPoints = CalculatePoints("output4.txt");
+            }
+
+            double newFactor;
+
+            double rico = (currentPoints - previousPoints) / (factor - previousfactor);
+
+            if (rico == 0)
+                break;
+            
+            newFactor = max(min(rico * 5 + factor, abs(factor-previousfactor)+factor), factor-abs(factor-previousfactor)/2);
+
+            previousfactor = factor;
+            factor = newFactor;
+            previousPoints = currentPoints;
+
+            System.out.println("iteration "+j+" with factor "+previousfactor+" gives points: "+currentPoints);
+        }
+*/
+        double previousfactor = 0;
+        double previousPoints = 0.0;
+        if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", previousfactor)== 1){
+            output(/*i + "/*/"output6.txt");
+            previousPoints = CalculatePoints("output6.txt");
+        }
+        System.out.println("iteration "+0+" with factor "+previousfactor+" gives points: "+previousPoints);
+
+
+        double factor = 20;
+        for (int j = 1; j <= 20; j++) {
+            double currentPoints = 0.0;
+            if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", factor)== 1){
                 output(/*i + "/*/"output6.txt");
-                CalculatePoints("output6.txt");
+                currentPoints = CalculatePoints("output6.txt");
             }
+
+            double newFactor;
+            System.out.println("iteration "+j+" with factor "+factor+" gives points: "+currentPoints);
+            double rico = (currentPoints - previousPoints) / (factor - previousfactor);
+
+            if (rico == 0)
+                break;
+
+            newFactor = max(min(rico * 5 + factor, abs(factor-previousfactor)+factor), factor-abs(factor-previousfactor)/2);
+
+            previousfactor = factor;
+            factor = newFactor;
+            previousPoints = currentPoints;
+        }
         //}
         //output("output1.txt");
     }
@@ -106,12 +210,12 @@ public class Main {
             StringBuilder bookString = new StringBuilder();
             int amountOfBooks = 0;
             for (java.util.HashMap.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
-                //if (!bookList.contains(integerIntegerEntry.getKey())) {
+                if (!bookList.contains(integerIntegerEntry.getKey())) {
                     amountOfBooks++;
                     bookList.add(integerIntegerEntry.getKey());
                     bookString.append((int) integerIntegerEntry.getKey());
                     bookString.append(" ");
-                //}
+                }
             }
             if (amountOfBooks > 0) {
                 amountOfLibraries++;
@@ -180,7 +284,7 @@ public class Main {
             for (Library library : libraries) {
                 int amountOfBooks = 0;
 
-                Iterator<HashMap.Entry<Integer, Integer>> it = library.books.entrySet().iterator();
+                /*Iterator<HashMap.Entry<Integer, Integer>> it = library.books.entrySet().iterator();
                 while (it.hasNext())
                 {
                     HashMap.Entry<Integer, Integer> integerIntegerEntry = it.next();
@@ -190,16 +294,16 @@ public class Main {
                     } else {
                         it.remove();
                     }
-                }
+                }*/
 
-                /*for (java.util.HashMap.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
+                for (java.util.HashMap.Entry<Integer, Integer> integerIntegerEntry : library.books.entrySet()) {
                     if (!bookList.contains(integerIntegerEntry.getKey())) {
                         amountOfBooks++;
                         bookList.add(integerIntegerEntry.getKey());
                     } else {
                         library.books.remove(integerIntegerEntry.getKey());
                     }
-                }*/
+                }
                 if (amountOfBooks > 0) {
                     amountOfLibraries++;
                 }
@@ -224,7 +328,7 @@ public class Main {
         return 1;
     }
 
-    /*public static <K, V extends Comparable<V>> Map<K, V>
+    public static <K, V extends Comparable<V>> Map<K, V>
     sortByValues(final Map<K, V> map) {
         Comparator<K> valueComparator =
                 new Comparator<K>() {
@@ -241,9 +345,9 @@ public class Main {
                 new TreeMap<K, V>(valueComparator);
         sortedByValues.putAll(map);
         return sortedByValues;
-    }*/
+    }
 
-    private static HashMap<Integer, Integer> sortByValues(Map<Integer, Integer> unsortMap)
+    /*private static HashMap<Integer, Integer> sortByValues(Map<Integer, Integer> unsortMap)
     {
 
         List<Entry<Integer, Integer>> list = new LinkedList<Entry<Integer, Integer>>(unsortMap.entrySet());
@@ -251,14 +355,14 @@ public class Main {
         // Sorting the list based on values
         Collections.sort(list, new Comparator<Entry<Integer, Integer>>()
         {
-            /*public int compare(K k1, K k2) {
-                int compare =
-                        map.get(k2).compareTo(map.get(k1));
-                if (compare == 0)
-                    return 1;
-                else
-                    return compare;
-            }*/
+            //public int compare(K k1, K k2) {
+            //    int compare =
+            //            map.get(k2).compareTo(map.get(k1));
+            //    if (compare == 0)
+            //        return 1;
+            //    else
+            //        return compare;
+            //}
             public int compare(Entry<Integer, Integer> o1,
                                Entry<Integer, Integer> o2)
             {
@@ -274,9 +378,9 @@ public class Main {
         }
 
         return sortedMap;
-    }
+    }*/
 
-    public static void CalculatePoints(String fileName) throws Exception
+    public static double CalculatePoints(String fileName) throws Exception
     {
         double totalPoints = 0;
         //tempData1 = new ArrayList<>();
@@ -327,6 +431,7 @@ public class Main {
         }
 
         System.out.println("Points for file "+fileName+" are "+totalPoints);
+        return totalPoints;
     }
 
     private static double CalculatePointsFromLibrary(Library library, HashSet<Integer> booksList) {
@@ -338,7 +443,7 @@ public class Main {
         {
             HashMap.Entry<Integer, Integer> entry = it.next();
             key = entry.getKey();
-            if (booksThisDay < library.amountBooksPerDay/* && !booksList.contains(key)*/) {
+            if (booksThisDay < library.amountBooksPerDay && !booksList.contains(key)) {
                 totalPoints += entry.getValue();
                 it.remove();
                 booksThisDay++;
