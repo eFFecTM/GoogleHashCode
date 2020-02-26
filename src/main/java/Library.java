@@ -1,16 +1,20 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Library {
 
     public int id;
+    public int booksUsed;
     public double amountBooks;
     public double signupTime;
     public double amountBooksPerDay;
-    public Map<Integer, Integer> books;
+    public HashMap<Integer, Integer> books;
     public double booksRatio;
     public double totalTimeNeeded;
     public double weightFactor;
+    public boolean signedUp = false;
+    public int lastSignedBook;
 
     public int getMaxScore() {
         return maxScore;
@@ -37,7 +41,7 @@ public class Library {
         this.amountBooks = amountBooks;
         this.signupTime = signupTime;
         this.amountBooksPerDay = amountBooksPerDay;
-        books = new TreeMap<>();
+        books = new HashMap<>();
         this.weightFactor = weightFactor;
         this.totalTimeNeeded = 350 * signupTime + amountBooks/amountBooksPerDay;
     }
