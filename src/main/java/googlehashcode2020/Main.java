@@ -1,13 +1,12 @@
+package googlehashcode2020;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import static java.lang.Math.min;
 import static java.lang.StrictMath.abs;
@@ -27,15 +26,15 @@ public class Main {
     public static void main(String... args) throws Exception {
         //for (int i = 10; i < 20; i++) {
             int i = 1;
-        if (loadAndProcess("src/main/resources/a_example.txt", i) == 1) {
+        if (loadAndProcess("src/main/resources/googlehashcode2020/a_example.txt", i) == 1) {
             output(/*i + "/*/"output1.txt");
             //CalculatePoints("output1.txt");
         }
-        if (loadAndProcess("src/main/resources/b_read_on.txt", i)== 1) {
+        if (loadAndProcess("src/main/resources/googlehashcode2020/b_read_on.txt", i)== 1) {
             output(/*i + "/*/"output2.txt");
             //CalculatePoints("output2.txt");
         }
-        if (loadAndProcess("src/main/resources/c_incunabula.txt", i)== 1){
+        if (loadAndProcess("src/main/resources/googlehashcode2020/c_incunabula.txt", i)== 1){
                 output(/*i + "/*/"output3.txt");
                 //CalculatePoints("output3.txt");
             }
@@ -123,7 +122,7 @@ public class Main {
 */
         double previousfactor = 0;
         double previousPoints = 0.0;
-        if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", previousfactor)== 1){
+        if (loadAndProcess("src/main/resources/googlehashcode2020/f_libraries_of_the_world.txt", previousfactor)== 1){
             output(/*i + "/*/"output6.txt");
             previousPoints = CalculatePoints("output6.txt");
         }
@@ -133,7 +132,7 @@ public class Main {
         double factor = 20;
         for (int j = 1; j <= 20; j++) {
             double currentPoints = 0.0;
-            if (loadAndProcess("src/main/resources/f_libraries_of_the_world.txt", factor)== 1){
+            if (loadAndProcess("src/main/resources/googlehashcode2020/f_libraries_of_the_world.txt", factor)== 1){
                 output(/*i + "/*/"output6.txt");
                 currentPoints = CalculatePoints("output6.txt");
             }
@@ -279,7 +278,7 @@ public class Main {
             int libraryWithoutBooks = 0;
             boolean libraryMoved = false;
             //libraries.clear();
-            //libraries = new ArrayList<Library>(copy);
+            //libraries = new ArrayList<googlehashcode2020.Library>(copy);
             int amountOfLibraries = 0;
             for (Library library : libraries) {
                 int amountOfBooks = 0;

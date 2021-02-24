@@ -1,3 +1,5 @@
+package googlehashcode2020;
+
 import java.util.ArrayList;
 
 public class Item {
