@@ -21,7 +21,7 @@ public class Main {
         for (int i = 97; i < 103; ++i)
         {
             if (loadAndProcess("src/main/resources/googlehashcode2021/"+(char) i+".txt", i) == 1) {
-                output("output"+fileLetter+".txt");
+                output("output"+(char) i+".txt");
             }
         }
 
@@ -65,7 +65,7 @@ public class Main {
         streets = new LinkedHashMap<>();
         cars = new ArrayList<>();
         intersections = new ArrayList<>();
-        
+
         String[] s = tempDataInput.get(0).split(" ");
         duration = Integer.parseInt(s[0]);
         amountOfIntersections = Integer.parseInt(s[1]);
