@@ -10,9 +10,13 @@ public class Main {
     public static List<String> tempDataInput = new ArrayList<>();
     public static List<String> tempDataOutput = new ArrayList<>();
 
+    public static int duration, amountOfIntersections, amountOfStreets, amountOfCars, bonusPoints;
+    public static Map<String, Street> streets = new HashMap<>();
+    public static List<Car> cars = new ArrayList<>();
+
     public static void main(String... args) throws Exception {
         int i = 1;
-        if (loadAndProcess("src/main/resources/googlehashcode2020/a_example.txt", i) == 1) {
+        if (loadAndProcess("src/main/resources/googlehashcode2021/a.txt", i) == 1) {
             output("output1.txt");
         }
 
@@ -50,15 +54,27 @@ public class Main {
     private static int loadAndProcess(String path, double weightFactor) throws Exception {
         tempDataInput = Files.lines(Paths.get(path)).collect(Collectors.toList());
 
-        for (int i = 0; i < tempDataInput.size(); i++) {
-            if (i == 0) {
+        String[] s = tempDataInput.get(0).split(" ");
+        duration = Integer.parseInt(s[0]);
+        amountOfIntersections = Integer.parseInt(s[1]);
+        amountOfStreets = Integer.parseInt(s[2]);
+        amountOfCars = Integer.parseInt(s[3]);
+        bonusPoints = Integer.parseInt(s[4]);
 
-            } else if (i == 1) {
-
-            } else {
-
-            }
+        for (int i = 1; i <= amountOfStreets; i++) {
+            s = tempDataInput.get(i).split(" ");
+            streets.put(s[2], new Street(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[3])));
         }
+
+        for (int i = amountOfStreets + 1; i <= amountOfStreets + amountOfCars; i++) {
+            s = tempDataInput.get(i).split(" ");
+            Map<String, Street> carStreets = new HashMap<>();
+            for (int j = 1; j < s.length; j++) {
+                carStreets.put(s[j], streets.get(s[j]));
+            }
+            cars.add(new Car(carStreets));
+        }
+
         return calculate();
     }
 
