@@ -8,10 +8,12 @@ public class Intersection
 {
     public int number;
     public List<String> streets;
+    public List<Integer> time;
 
     public Intersection(int number)
     {
         streets = new ArrayList<>();
+        time = new ArrayList<>();
         this.number = number;
     }
 
@@ -28,5 +30,15 @@ public class Intersection
     public List<String> getStreets()
     {
         return streets;
+    }
+
+    public void addTime(int value)
+    {
+        time.add(value);
+    }
+
+    public List<Integer> getTimes()
+    {
+        return time;
     }
 }

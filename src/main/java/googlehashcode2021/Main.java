@@ -115,9 +115,11 @@ public class Main {
             tempDataOutput.add(String.valueOf(intersection.getNumber()));
             List<String> streets = intersection.getStreets();
             tempDataOutput.add(String.valueOf(streets.size()));
+            int i = 0;
             for (String streetName: streets)
             {
-                tempDataOutput.add(streetName+ " 1");
+                tempDataOutput.add(streetName+" "+intersection.getTimes().get(i));
+                ++i;
             }
         }
 
@@ -140,6 +142,7 @@ public class Main {
                 if (street.end == i)
                 {
                     intersection.addStreet(streetName);
+                    intersection.addTime(1);
                 }
             }
 
