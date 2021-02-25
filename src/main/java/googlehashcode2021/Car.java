@@ -16,7 +16,7 @@ public class Car {
             totalTime += street.time;
         }
         currentStreet = streets.entrySet().iterator().next().getValue();
-        totalTime = streets.values().iterator().next().time;
+        //totalTime = streets.values().iterator().next().time;
         cost = (double) streets.size() / (double) totalTime;
         finished = false;
     }

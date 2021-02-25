@@ -169,7 +169,6 @@ public class Main {
 
                 if (street.end == i)
                 {
-                    intersection.addStreet(streetName);
                     double amount = (double) street.amountOfVisits;
                     double factor = 2;
                     intersection.addTime((int) Math.max(Math.min(Math.min(timeFactor / maxAmountOfVisits * amount + new Random().nextInt(3), duration), timeFactor), 1));
