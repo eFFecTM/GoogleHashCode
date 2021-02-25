@@ -96,16 +96,6 @@ public class Main {
 
         cars.removeIf(car -> car.totalTime > duration);
 
-        Map<String, Street> tempStreets = new LinkedHashMap<>();
-        for (Map.Entry<String, Street> street : streets.entrySet()) {
-            for (Car car : cars ) {
-                if (car.streets.containsKey(street.getKey())) {
-                    tempStreets.put(street.getKey(), street.getValue());
-                    break;
-                }
-            }
-        }
-        streets = tempStreets;
         return calculate();
     }
 
@@ -163,6 +153,11 @@ public class Main {
                     intersection.addStreet(streetName);
                     intersection.addTime(1);
                 }
+            }
+
+            if (intersection.getStreets().isEmpty())
+            {
+                break;
             }
 
             intersections.add(intersection);
