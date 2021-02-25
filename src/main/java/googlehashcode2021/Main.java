@@ -15,6 +15,7 @@ public class Main {
     public static Map<String, Street> streets = new LinkedHashMap<>();
     public static List<Street> streetsSortedPopularityDesc = new ArrayList<>();
     public static List<Car> cars = new ArrayList<>();
+    public static List<Car> originalcars = new ArrayList<>();
     public static List<Intersection> intersections = new ArrayList<>();
 
     public static void main(String... args) throws Exception {
@@ -66,6 +67,7 @@ public class Main {
 
         streets = new LinkedHashMap<>();
         cars = new ArrayList<>();
+        originalcars = cars;
         intersections = new ArrayList<>();
 
         String[] s = tempDataInput.get(0).split(" ");
@@ -169,8 +171,7 @@ public class Main {
                 {
                     intersection.addStreet(streetName);
                     double amount = (double) street.amountOfVisits;
-//                    intersection.addTime((int) (Math.max(1, Math.min(((((double) duration) / maxAmountOfVisits * amount)), duration) / (double) timeFactor)));
-
+                    double factor = 2;
                     intersection.addTime((int) Math.max(Math.min(Math.min(timeFactor / maxAmountOfVisits * amount + new Random().nextInt(3), duration), timeFactor), 1));
                 }
             }
@@ -183,16 +184,43 @@ public class Main {
             intersections.add(intersection);
         }
 
+        //calculatePoints(path);
         return 1;
     }
 
 
-    public static double calculatePoints(String fileName) throws Exception {
+    public static double calculatePoints(String path)
+    {
         double totalPoints = 0;
 
-        //
+        for (Car car: originalcars) {
+            int totalTime = 0;
+            Iterator it = car.streets.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                String streetName = (String) pair.getKey();
+                Street street = (Street) pair.getValue();
 
-        System.out.println("Points for file " + fileName + " are " + totalPoints);
+                int end = street.end;
+                Intersection intersection = intersections.get(end);
+
+                for (String streetNameIntersection: intersection.streets)
+                {
+                    if (streetNameIntersection.equals(streetName))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                //if (op groen na totalTime)
+            }
+            totalPoints += bonusPoints;
+        }
+
+        System.out.println("Points for file " + path + " are " + totalPoints);
         return totalPoints;
     }
 }

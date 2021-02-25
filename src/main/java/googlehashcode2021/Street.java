@@ -9,6 +9,7 @@ public class Street {
         this.start = start;
         this.end = end;
         this.time = time;
+        this.name = name;
         seconds = 0;
         this.name = name;
     }
