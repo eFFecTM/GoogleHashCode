@@ -11,7 +11,7 @@ public class Main {
     public static List<String> tempDataOutput = new ArrayList<>();
 
     public static int duration, amountOfIntersections, amountOfStreets, amountOfCars, bonusPoints;
-    public static Map<String, Street> streets = new HashMap<>();
+    public static Map<String, Street> streets = new LinkedHashMap<>();
     public static List<Car> cars = new ArrayList<>();
 
     public static void main(String... args) throws Exception {
@@ -68,7 +68,7 @@ public class Main {
 
         for (int i = amountOfStreets + 1; i <= amountOfStreets + amountOfCars; i++) {
             s = tempDataInput.get(i).split(" ");
-            Map<String, Street> carStreets = new HashMap<>();
+            Map<String, Street> carStreets = new LinkedHashMap<>();
             for (int j = 1; j < s.length; j++) {
                 carStreets.put(s[j], streets.get(s[j]));
             }
