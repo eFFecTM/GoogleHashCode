@@ -111,7 +111,7 @@ public class Main {
             streets.put(street.name, street);
         }
 
-        return calculate(1);
+        return calculate(2);
     }
 
     public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
@@ -151,7 +151,8 @@ public class Main {
     }
 
     private static int calculate(double timeFactor) {
-        double maxAmountOfVisits = streets.values().iterator().next().amountOfVisits;
+        double maxAmountOfVisits = (double) streets.values().iterator().next().amountOfVisits;
+        double duration = (double) Main.duration;
 
         for (int i = 0; i < amountOfIntersections; ++i)
         {
@@ -168,7 +169,9 @@ public class Main {
                 {
                     intersection.addStreet(streetName);
                     double amount = (double) street.amountOfVisits;
-                    intersection.addTime((int) (amount * (double) duration / maxAmountOfVisits));
+//                    intersection.addTime((int) (Math.max(1, Math.min(((((double) duration) / maxAmountOfVisits * amount)), duration) / (double) timeFactor)));
+
+                    intersection.addTime((int) Math.max(Math.min(Math.min(timeFactor / maxAmountOfVisits * amount + new Random().nextInt(3), duration), timeFactor), 1));
                 }
             }
 
