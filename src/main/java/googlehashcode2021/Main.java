@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -12,6 +13,7 @@ public class Main {
 
     public static int duration, amountOfIntersections, amountOfStreets, amountOfCars, bonusPoints;
     public static Map<String, Street> streets = new LinkedHashMap<>();
+    public static List<Street> streetsSortedPopularityDesc = new ArrayList<>();
     public static List<Car> cars = new ArrayList<>();
     public static List<Intersection> intersections = new ArrayList<>();
 
@@ -75,14 +77,16 @@ public class Main {
 
         for (int i = 1; i <= amountOfStreets; i++) {
             s = tempDataInput.get(i).split(" ");
-            streets.put(s[2], new Street(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[3])));
+            streets.put(s[2], new Street(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[3]), s[2]));
         }
 
         for (int i = amountOfStreets + 1; i <= amountOfStreets + amountOfCars; i++) {
             s = tempDataInput.get(i).split(" ");
             Map<String, Street> carStreets = new LinkedHashMap<>();
             for (int j = 1; j < s.length; j++) {
-                carStreets.put(s[j], streets.get(s[j]));
+                Street street = streets.get(s[j]);
+                carStreets.put(s[j], street);
+                street.amountOfVisits++;
             }
             cars.add(new Car(carStreets));
         }
@@ -96,7 +100,18 @@ public class Main {
 
         cars.removeIf(car -> car.totalTime > duration);
 
-        return calculate();
+        List<Street> collect = streets.values().stream().sorted((street1, street2) -> {
+            if (street1.amountOfVisits > street2.amountOfVisits) {
+                return -1;
+            }
+            return 0;
+        }).collect(Collectors.toList());
+        streets.clear();
+        for (Street street : collect) {
+            streets.put(street.name, street);
+        }
+
+        return calculate(1);
     }
 
     public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
@@ -135,7 +150,8 @@ public class Main {
         Files.write(Paths.get(fileName), (Iterable<String>) tempDataOutput.stream()::iterator);
     }
 
-    private static int calculate() {
+    private static int calculate(double timeFactor) {
+        double maxAmountOfVisits = streets.values().iterator().next().amountOfVisits;
 
         for (int i = 0; i < amountOfIntersections; ++i)
         {
@@ -151,7 +167,8 @@ public class Main {
                 if (street.end == i)
                 {
                     intersection.addStreet(streetName);
-                    intersection.addTime(1);
+                    double amount = (double) street.amountOfVisits;
+                    intersection.addTime((int) (amount * (double) duration / maxAmountOfVisits));
                 }
             }
 
