@@ -17,8 +17,9 @@ public class Main {
 
     public static void main(String... args) throws Exception {
         int i = 1;
-        if (loadAndProcess("src/main/resources/googlehashcode2021/a.txt", i) == 1) {
-            output("output1.txt");
+        String fileLetter = "a";
+        if (loadAndProcess("src/main/resources/googlehashcode2021/"+fileLetter+".txt", i) == 1) {
+            output("output"+fileLetter+".txt");
         }
 
 //        double previousfactor = 0;
@@ -126,7 +127,7 @@ public class Main {
                 String streetName = (String) pair.getKey();
                 Street street = (Street) pair.getValue();
 
-                if (street.start == i)
+                if (street.end == i)
                 {
                     intersection.addStreet(streetName);
                 }
