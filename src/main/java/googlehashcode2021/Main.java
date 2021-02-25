@@ -16,11 +16,15 @@ public class Main {
     public static List<Intersection> intersections = new ArrayList<>();
 
     public static void main(String... args) throws Exception {
-        int i = 1;
         String fileLetter = "a";
-        if (loadAndProcess("src/main/resources/googlehashcode2021/"+fileLetter+".txt", i) == 1) {
-            output("output"+fileLetter+".txt");
+
+        for (int i = 97; i < 103; ++i)
+        {
+            if (loadAndProcess("src/main/resources/googlehashcode2021/"+(char) i+".txt", i) == 1) {
+                output("output"+fileLetter+".txt");
+            }
         }
+
 
 //        double previousfactor = 0;
 //        double previousPoints = 0.0;
@@ -54,8 +58,14 @@ public class Main {
     }
 
     private static int loadAndProcess(String path, double weightFactor) throws Exception {
+        tempDataOutput = new ArrayList<>();
+        tempDataInput = new ArrayList<>();
         tempDataInput = Files.lines(Paths.get(path)).collect(Collectors.toList());
 
+        streets = new LinkedHashMap<>();
+        cars = new ArrayList<>();
+        intersections = new ArrayList<>();
+        
         String[] s = tempDataInput.get(0).split(" ");
         duration = Integer.parseInt(s[0]);
         amountOfIntersections = Integer.parseInt(s[1]);
