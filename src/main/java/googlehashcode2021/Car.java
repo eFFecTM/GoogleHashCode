@@ -13,6 +13,7 @@ public class Car {
         for (Street street : streets.values()) {
             totalTime += street.time;
         }
+        totalTime = streets.values().iterator().next().time;
         cost = (double) streets.size() / (double) totalTime;
     }
 }

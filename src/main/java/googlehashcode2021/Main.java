@@ -87,6 +87,25 @@ public class Main {
             cars.add(new Car(carStreets));
         }
 
+        cars.sort((car1, car2) -> {
+            if (car1.cost < car2.cost) {
+                return -1;
+            }
+            return 0;
+        });
+
+        cars.removeIf(car -> car.totalTime > duration);
+
+        Map<String, Street> tempStreets = new LinkedHashMap<>();
+        for (Map.Entry<String, Street> street : streets.entrySet()) {
+            for (Car car : cars ) {
+                if (car.streets.containsKey(street.getKey())) {
+                    tempStreets.put(street.getKey(), street.getValue());
+                    break;
+                }
+            }
+        }
+        streets = tempStreets;
         return calculate();
     }
 
