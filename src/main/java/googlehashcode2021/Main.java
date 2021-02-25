@@ -13,6 +13,7 @@ public class Main {
     public static int duration, amountOfIntersections, amountOfStreets, amountOfCars, bonusPoints;
     public static Map<String, Street> streets = new LinkedHashMap<>();
     public static List<Car> cars = new ArrayList<>();
+    public static List<Intersection> intersections = new ArrayList<>();
 
     public static void main(String... args) throws Exception {
         int i = 1;
@@ -95,28 +96,44 @@ public class Main {
     }
 
     private static void output(String fileName) throws Exception {
-        //
-        tempDataOutput.add("test1");
-        tempDataOutput.add("test2");
-        tempDataOutput.add("test3");
+        tempDataOutput.add(String.valueOf(intersections.size()));
+
+        System.out.println("Intersections added: "+intersections.size());
+        for (Intersection intersection: intersections)
+        {
+            tempDataOutput.add(String.valueOf(intersection.getNumber()));
+            List<String> streets = intersection.getStreets();
+            tempDataOutput.add(String.valueOf(streets.size()));
+            for (String streetName: streets)
+            {
+                tempDataOutput.add(streetName+ " 1");
+            }
+        }
+
         Files.write(Paths.get(fileName), (Iterable<String>) tempDataOutput.stream()::iterator);
     }
 
     private static int calculate() {
-        //
 
-//        Collections.sort(libraries, new Comparator<Library>() {
-//            @Override
-//            public int compare(Library library, Library t1) {
-//                if (library.booksRatio < t1.booksRatio)
-//                    return 1;
-//                else if (library.booksRatio > t1.booksRatio)
-//                    return -1;
-//                else
-//                    return 0;
-//            }
-//        });
+        for (int i = 0; i < amountOfIntersections; ++i)
+        {
+            Intersection intersection = new Intersection(i);
 
+            Iterator it = streets.entrySet().iterator();
+            while (it.hasNext())
+            {
+                Map.Entry pair = (Map.Entry) it.next();
+                String streetName = (String) pair.getKey();
+                Street street = (Street) pair.getValue();
+
+                if (street.start == i)
+                {
+                    intersection.addStreet(streetName);
+                }
+            }
+
+            intersections.add(intersection);
+        }
 
         return 1;
     }
